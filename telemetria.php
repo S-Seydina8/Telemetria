@@ -1,9 +1,21 @@
 <?php
-    $ping_grezzi = [45, 120, -1, 32, 210, 85, -1, 18, 95, 310, 45, 60, -1, 150, 28, 240, 18, 72];
-    $ping_validi = [];
-    array_push($ping_grezzi, 90, 190, 12);
-    $contatori_persi = 0;
-?>;
+$ping_grezzi = [
+    45, 120, -1, 32, 210, 85, -1, 18, 95, 310, 
+    45, 60, -1, 150, 28, 240, 18, 72, 90, 190, 12
+];
+
+$ping_validi = [];
+$contatori_persi = 0;
+
+foreach ($ping_grezzi as $cercate) {
+    if ($cercate == -1) {
+        $contatori_persi++;
+    }
+    if ($cercate > 0) {
+        $ping_validi[] = $cercate; 
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,14 +26,16 @@
 </head>
 <body>
     <ul>
-            <?php foreach($cercate as $ping_grezzi): ?>;
-                <li> <?php if($cercate == -1): ?>; </li>   
-                <li> <?php echo($contatori_persi+=1); ?>;
-                <li> <?php endif; ?>;
-                <li> <?php if($cercate > 0): ?>; </li>
-                <li> <?php array_push($ping_validi, $cercate); ?>; 
-                <li> <?php endif; ?>;
-            <?php endforeach; ?>;
+        <?php foreach ($ping_grezzi as $cercate): ?>
+            <?php if ($cercate == -1): ?>
+                <li> ping perso! </li>
+            <?php endif; ?>
+            <?php if ($cercate > 0): ?>
+                <li> Ping sistemato! </li>
+            <?php endif; ?>
+        <?php endforeach; ?>
     </ul>
+    
+    <p>Totale contatori persi (valore 1): <?php echo $contatori_persi; ?></p>
 </body>
 </html>
