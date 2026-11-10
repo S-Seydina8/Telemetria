@@ -1,41 +1,53 @@
-<?php
-$ping_grezzi = [
-    45, 120, -1, 32, 210, 85, -1, 18, 95, 310, 
-    45, 60, -1, 150, 28, 240, 18, 72, 90, 190, 12
-];
+<?php 
+$ping_grezzi = [ 45, 120, -1, 32, 210, 85, -1, 18, 95, 310, 45, 60, -1, 150, 28, 240, 18, 72, 90, 190, 12 ]; 
+$ping_validi = []; 
+$contatori_persi = 0; 
 
-$ping_validi = [];
-$contatori_persi = 0;
+foreach ($ping_grezzi as $cercate) { 
+    if ($cercate == -1) { 
+        $contatori_persi++; 
+    } 
+    if ($cercate > 0) { 
+        array_push($ping_validi, $cercate); 
+    } 
+} 
 
-foreach ($ping_grezzi as $cercate) {
-    if ($cercate == -1) {
-        $contatori_persi++;
+
+$massimo = $ping_validi[0];
+$minimo = $ping_validi[0];
+
+foreach ($ping_validi as $ping) {
+    if ($ping > $massimo) {
+        $massimo = $ping;
     }
-    if ($cercate > 0) {
-        $ping_validi[] = $cercate; 
+    if ($ping < $minimo) {
+        $minimo = $ping;
     }
 }
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <ul>
-        <?php foreach ($ping_grezzi as $cercate): ?>
-            <?php if ($cercate == -1): ?>
-                <li> ping perso! </li>
-            <?php endif; ?>
-            <?php if ($cercate > 0): ?>
-                <li> Ping sistemato! </li>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </ul>
+?> 
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Analisi Ping</title> 
+</head> 
+<body> 
+    <ul> 
+        <?php foreach ($ping_grezzi as $cercate): ?> 
+            <?php if ($cercate == -1): ?> 
+                <li> ping perso! </li> 
+            <?php endif; ?> 
+            <?php if ($cercate > 0): ?> 
+                <li> Ping sistemato! </li> 
+            <?php endif; ?> 
+        <?php endforeach; ?> 
+        
+        <li> array di ping validi: <?php print_r($ping_validi) ?> </li> 
+    </ul> 
     
-    <p>Totale contatori persi (valore 1): <?php echo $contatori_persi; ?></p>
-</body>
+    <p>Totale contatori persi (valore -1): <?php echo $contatori_persi; ?></p> 
+    <p><strong>Ping Massimo:</strong> <?php echo $massimo; ?> ms</p>
+    <p><strong>Ping Minimo:</strong> <?php echo $minimo; ?> ms</p>
+</body> 
 </html>
