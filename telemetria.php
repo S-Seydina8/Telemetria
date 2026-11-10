@@ -2,6 +2,7 @@
 $ping_grezzi = [ 45, 120, -1, 32, 210, 85, -1, 18, 95, 310, 45, 60, -1, 150, 28, 240, 18, 72, 90, 190, 12 ]; 
 $ping_validi = []; 
 $contatori_persi = 0; 
+$ping_critici = [];
 
 foreach ($ping_grezzi as $cercate) { 
     if ($cercate == -1) { 
@@ -10,6 +11,9 @@ foreach ($ping_grezzi as $cercate) {
     if ($cercate > 0) { 
         array_push($ping_validi, $cercate); 
     } 
+    if ($massimo < 150) {
+        array_push($ping_critici, $cercate);
+    }
 } 
 
 
@@ -49,5 +53,6 @@ foreach ($ping_validi as $ping) {
     <p>Totale contatori persi (valore -1): <?php echo $contatori_persi; ?></p> 
     <p><strong>Ping Massimo:</strong> <?php echo $massimo; ?> ms</p>
     <p><strong>Ping Minimo:</strong> <?php echo $minimo; ?> ms</p>
+    <p><strong>Ping critici:</strong> <?php echo $ping_critici ?>
 </body> 
 </html>
